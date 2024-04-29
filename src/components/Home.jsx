@@ -6,6 +6,7 @@ const Home = () => {
   const [posts, setPosts] = useState([]);
   const [lastPage, setLastPage] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [deletes, setDeletes] = useState(0);
 
   useEffect(() => {
     fetch(`${baseApiUrl}/posts?page=${currentPage}`)
@@ -35,18 +36,46 @@ const Home = () => {
     return paginationArr;
   }
 
+  const deletePost = (postId) => {
+    const authString = btoa("frank:WxYe utDe vOtm aIRs QQYt L1fX");
+    fetch(`${baseApiUrl}/posts/${postId}`, {
+      headers: {
+        Authorization: `Basic ${authString}`,
+      },
+      method: "DELETE",
+    })
+      .then((res) => {
+        if (res.ok) {
+          // Forza l'aggiornamento del componente
+          setDeletes(deletes + 1);
+        }
+      })
+      .catch((error) => {
+        console.error("Errore durante l'eliminazione del post:", error);
+      });
+  };
+
   return (
     <div className="container">
-      <h1 className="mt-5 ms-3">Posts</h1>
+      <h1 className="mt-5 ms-4">Il Blog degli appassionati di tecnologia</h1>
       <ul className="mt-4">
         {posts.map((post) => (
           <li className="list-group lh-lg" key={post.id}>
-            <Link to={`/posts/${post.id}`}>{post.title.rendered}</Link>
+            <div className="row align-items-center">
+              <div className="col">
+                <Link to={`/posts/${post.id}`}>{post.title.rendered}</Link>
+              </div>
+              <div className="col">
+                <button className="btn btn-danger btn-sm" onClick={() => deletePost(post.id)}>
+                  Delete
+                </button>
+              </div>
+            </div>
           </li>
         ))}
       </ul>
 
-      <nav>
+      <nav className="mx-4 mt-5">
         <ul className="pagination">
           <li className={`page-item ${currentPage === 1 && "disabled"}`}>
             <span className="page-link" onClick={() => currentPage !== 1 && changePage(currentPage - 1)}>
