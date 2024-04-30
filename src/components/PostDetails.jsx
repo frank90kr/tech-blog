@@ -23,10 +23,14 @@ const PostDetails = () => {
       <div className="container">
         <h1 className="mx-5 mt-4">{post.title.rendered}</h1>
         <h5 className="text-secondary mx-5">Author: {post._embedded.author[0].name}</h5>
+        {post.date && (
+          <h6 className="text-secondary mx-5">Data di creazione: {new Date(post.date).toLocaleString()}</h6>
+        )}
         {post._embedded && post._embedded["wp:term"] && (
           <div className="mx-5">
+            Categoria:
             {post._embedded["wp:term"][0].map((category) => (
-              <span key={category.id} className="badge rounded-pill text-bg-secondary px-3">
+              <span key={category.id} className="badge rounded-pill text-bg-secondary ms-2 px-3">
                 {category.name}
               </span>
             ))}
@@ -34,7 +38,6 @@ const PostDetails = () => {
         )}
 
         <div className="row">
-          {/* content */}
           <div className="col-8 mt-3 mx-5">
             <div dangerouslySetInnerHTML={{ __html: post.content.rendered }}></div>
           </div>

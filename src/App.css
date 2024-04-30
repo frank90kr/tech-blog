@@ -1,3 +1,7 @@
 body {
   background-color: rgb(243, 243, 243);
 }
+
+.pagination-home:hover {
+  cursor: pointer;
+}
