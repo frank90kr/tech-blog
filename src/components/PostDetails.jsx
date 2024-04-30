@@ -22,6 +22,15 @@ const PostDetails = () => {
     post && (
       <div className="container">
         <h1 className="mx-5 mt-4">{post.title.rendered}</h1>
+        <img
+          className="ms-5"
+          src={
+            post._embedded["wp:featuredmedia"]
+              ? post._embedded["wp:featuredmedia"][0].source_url
+              : "/assets/1155130.jpg"
+          }
+          alt="immagine non disponibile"
+        />
         <h5 className="text-secondary mx-5">Author: {post._embedded.author[0].name}</h5>
         {post.date && (
           <h6 className="text-secondary mx-5">Data di creazione: {new Date(post.date).toLocaleString()}</h6>

@@ -5,3 +5,11 @@ body {
 .pagination-home:hover {
   cursor: pointer;
 }
+
+.titolo-post {
+  text-decoration: none;
+}
+
+.segnaposto {
+  list-style-type: none;
+}
